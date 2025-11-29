@@ -1,58 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Error's Cozy Website</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Error's Cozy Website</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- Start screen -->
 <div id="startScreen">
     <h1>Welcome</h1>
     <button id="startBtn">Go to Website</button>
 </div>
 
-<div class="navbar">
-    <div class="nav-btn" onclick="showSection('homeSection')">Home</div>
-    <div class="nav-btn" onclick="showSection('creditsSection')">Credits</div>
-    <div class="nav-btn" onclick="showSection('projectsSection')">Projects</div>
-</div>
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="nav-btn" onclick="showSection('home')">Home</div>
+    <div class="nav-btn" onclick="showSection('credits')">Credits</div>
+    <div class="nav-btn" onclick="showSection('projects')">Projects</div>
+</nav>
 
-<div id="homeSection" class="section">
+<!-- Sections -->
+<section id="home" class="section active">
     <h1>Hello, I'm Error.</h1>
     <p>I'm glad someone is reading this ❤</p>
-</div>
+</section>
 
-<div id="creditsSection" class="section">
+<section id="credits" class="section">
     <h1>Credits</h1>
-</div>
+    <div class="about-card">
+        <img src="avatar.png" class="about-avatar">
+        <div class="about-info">
+            <h2>Error</h2>
+            <p class="role">Owner</p>
+            <button class="github-btn" onclick="window.open('https://github.com/marcus640', '_blank')">
+                Visit my GitHub →
+            </button>
+        </div>
+    </div>
+</section>
 
-<div id="projectsSection" class="section">
+<section id="projects" class="section">
     <h1>Projects</h1>
-</div>
+    <p>Coming soon…</p>
+</section>
 
-<!-- Музика -->
+<!-- Audio -->
 <audio id="bgMusic" loop>
-    <source src="Harmless Swing Lynn (Slowed Version).mp3" type="audio/mp3">
-    Your browser does not support the audio element.
+    <source src="Harmless_Swing_Lynn_Slowed.mp3" type="audio/mp3">
 </audio>
 
 <script>
-/* Перемикач секцій */
-function showSection(id) {
-    document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+/* Sections switching */
+function showSection(id){
+    document.querySelectorAll(".section").forEach(s => s.style.display = "none");
     document.getElementById(id).style.display = "block";
 }
 
-/* Кнопка старту сайту + запуск музики */
-document.getElementById("startBtn").onclick = () => {
-    document.getElementById("startScreen").style.display = "none";
-    const audio = document.getElementById("bgMusic");
-    audio.play().catch(() => {
-        alert("Click anywhere on the page to start music");
-    });
-};
-</script>
+/* Start button */
+const startBtn = document.getElementById('startBtn');
+const startScreen = document.getElementById('startScreen');
+const audio = document.getElementById('bgMusic');
 
+startBtn.addEventListener('click', async () => {
+    startScreen.style.display = "none";
+    showSection('home');
+    try {
+        await audio.play();
+    } catch(e){
+        console.log('Autoplay blocked. Click anywhere to start music.');
+    }
+});
+
+/* Bubbles effect */
+function createBubble(){
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    const size = Math.random() * 40 + 10;
+    bubble.style.width = bubble.style.height = size + 'px';
+    bubble.style.left = Math.random() * 100 + 'vw';
+    bubble.style.animationDuration = (Math.random() * 5 + 5) + 's';
+    bubble.style.opacity = Math.random() * 0.5 + 0.2;
+    document.body.appendChild(bubble);
+    setTimeout(() => bubble.remove(), 10000);
+}
+
+setInterval(createBubble, 200);
+</script>
 </body>
 </html>
