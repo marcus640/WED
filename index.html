@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error's Cozy Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Стартове вікно -->
+<div id="startScreen">
+    <h1>Welcome</h1>
+    <button id="startBtn">Go to Website</button>
+</div>
+
+<!-- Навігація -->
+<div class="navbar">
+    <div class="nav-btn" onclick="showSection('homeSection')">Home</div>
+    <div class="nav-btn" onclick="showSection('creditsSection')">Credits</div>
+    <div class="nav-btn" onclick="showSection('projectsSection')">Projects</div>
+</div>
+
+<!-- Секції -->
+<div id="homeSection" class="section">
+    <h1>Hello, I'm Error.</h1>
+    <p>I'm glad someone is reading this ❤</p>
+</div>
+
+<div id="creditsSection" class="section">
+    <h1 style="margin-bottom: 40px;">Credits</h1>
+    <div class="about-card">
+        <img src="avatar.png" class="about-avatar">
+        <div class="about-info">
+            <h2>Error</h2>
+            <p class="role">Owner</p>
+            <button class="github-btn" onclick="window.open('https://github.com/marcus640', '_blank')">
+                Visit my GitHub →
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="projectsSection" class="section">
+    <h1>My Projects</h1>
+    <p>Coming soon…</p>
+</div>
+
+<!-- Музика -->
+<audio id="bgMusic" loop>
+    <source src="Harmless Swing Lynn (Slowed Version).mp4" type="audio/mp4">
+</audio>
+
+<script>
+    /* Перемикач секцій */
+    function showSection(id) {
+        document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+        document.getElementById(id).style.display = "block";
+    }
+
+    /* Стартова кнопка */
+    document.getElementById("startBtn").onclick = () => {
+        document.getElementById("startScreen").style.display = "none";
+        document.getElementById("bgMusic").play();
+    };
+
+    /* Генерація бульбашок */
+    const bubbleCount = 40;
+    const screenHeight = window.innerHeight;
+
+    for (let i = 0; i < bubbleCount; i++) {
+        let bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.style.width = bubble.style.height = (Math.random()*50 + 10) + "px";
+        bubble.style.left = Math.random()*100 + "%";
+        bubble.style.bottom = "0px"; // старт з низу
+        bubble.style.animationDuration = (Math.random()*8 + 5) + "s";
+        document.body.appendChild(bubble);
+    }
+</script>
+
+</body>
+</html>
