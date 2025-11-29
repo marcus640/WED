@@ -24,57 +24,34 @@
 </div>
 
 <div id="creditsSection" class="section">
-    <h1 style="margin-bottom: 40px;">Credits</h1>
-    <div class="about-card">
-        <img src="avatar.png" class="about-avatar">
-        <div class="about-info">
-            <h2>Error</h2>
-            <p class="role">Owner</p>
-            <button class="github-btn" onclick="window.open('https://github.com/marcus640', '_blank')">
-                Visit my GitHub →
-            </button>
-        </div>
-    </div>
+    <h1>Credits</h1>
 </div>
 
 <div id="projectsSection" class="section">
-    <h1>My Projects</h1>
-    <p>Coming soon…</p>
+    <h1>Projects</h1>
 </div>
 
+<!-- Музика -->
 <audio id="bgMusic" loop>
     <source src="Harmless Swing Lynn (Slowed Version).mp3" type="audio/mp3">
+    Your browser does not support the audio element.
 </audio>
 
 <script>
+/* Перемикач секцій */
 function showSection(id) {
     document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
     document.getElementById(id).style.display = "block";
 }
 
+/* Кнопка старту сайту + запуск музики */
 document.getElementById("startBtn").onclick = () => {
     document.getElementById("startScreen").style.display = "none";
-    document.getElementById("bgMusic").play();
-    createBubbles();
+    const audio = document.getElementById("bgMusic");
+    audio.play().catch(() => {
+        alert("Click anywhere on the page to start music");
+    });
 };
-
-/* Створення бульбашок поступово знизу */
-function createBubbles() {
-    const bubbleCount = 50;
-    for (let i = 0; i < bubbleCount; i++) {
-        setTimeout(() => {
-            let bubble = document.createElement("div");
-            bubble.className = "bubble";
-            let size = Math.random()*50 + 10;
-            bubble.style.width = bubble.style.height = size + "px";
-            bubble.style.left = Math.random()*100 + "%";
-            bubble.style.bottom = "-50px"; // старт трохи нижче екрану
-            bubble.style.animationDuration = (Math.random()*8 + 5) + "s";
-            bubble.style.opacity = Math.random()*0.4 + 0.2;
-            document.body.appendChild(bubble);
-        }, i * 150); // по черзі з невеликим інтервалом
-    }
-}
 </script>
 
 </body>
