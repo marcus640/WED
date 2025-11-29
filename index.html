@@ -12,9 +12,10 @@
 <div id="startScreen">
     <h1>Welcome</h1>
     <button id="startBtn">Go to Website</button>
+    <p class="hint">Click to enter — music will start.</p>
 </div>
 
-<!-- Navigation -->
+<!-- Navbar -->
 <nav class="navbar">
     <div class="nav-btn" onclick="showSection('home')">Home</div>
     <div class="nav-btn" onclick="showSection('credits')">Credits</div>
@@ -30,13 +31,11 @@
 <section id="credits" class="section">
     <h1>Credits</h1>
     <div class="about-card">
-        <img src="avatar.png" class="about-avatar">
+        <img src="avatar.png" class="about-avatar" alt="avatar">
         <div class="about-info">
             <h2>Error</h2>
             <p class="role">Owner</p>
-            <button class="github-btn" onclick="window.open('https://github.com/marcus640', '_blank')">
-                Visit my GitHub →
-            </button>
+            <button class="github-btn" onclick="window.open('https://github.com/marcus640','_blank')">Visit my GitHub →</button>
         </div>
     </div>
 </section>
@@ -46,47 +45,54 @@
     <p>Coming soon…</p>
 </section>
 
-<!-- Audio -->
-<audio id="bgMusic" loop>
-    <source src="Harmless_Swing_Lynn_Slowed.mp3" type="audio/mp3">
-</audio>
+<!-- Video as music -->
+<video id="bgMusic" loop>
+    <source src="Harmless_Swing_Lynn_Slowed.mp4" type="video/mp4">
+</video>
 
 <script>
-/* Sections switching */
+// --- Section switching ---
 function showSection(id){
-    document.querySelectorAll(".section").forEach(s => s.style.display = "none");
-    document.getElementById(id).style.display = "block";
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
 
-/* Start button */
+// --- Bubble effects ---
 const startBtn = document.getElementById('startBtn');
 const startScreen = document.getElementById('startScreen');
-const audio = document.getElementById('bgMusic');
+const video = document.getElementById('bgMusic');
 
 startBtn.addEventListener('click', async () => {
-    startScreen.style.display = "none";
+    startScreen.style.display='none';
     showSection('home');
-    try {
-        await audio.play();
+
+    // Запуск відео (як музика)
+    try{
+        await video.play();
     } catch(e){
-        console.log('Autoplay blocked. Click anywhere to start music.');
+        console.warn('Video play blocked:', e);
     }
+
+    startBubbles();
 });
 
-/* Bubbles effect */
-function createBubble(){
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    const size = Math.random() * 40 + 10;
-    bubble.style.width = bubble.style.height = size + 'px';
-    bubble.style.left = Math.random() * 100 + 'vw';
-    bubble.style.animationDuration = (Math.random() * 5 + 5) + 's';
-    bubble.style.opacity = Math.random() * 0.5 + 0.2;
-    document.body.appendChild(bubble);
-    setTimeout(() => bubble.remove(), 10000);
+function startBubbles(){
+    setInterval(() => {
+        const bubble = document.createElement('div');
+        bubble.className='bubble';
+        const size = Math.random()*48 + 12;
+        bubble.style.width = bubble.style.height = size+'px';
+        bubble.style.left = Math.random()*90 + 5 + 'vw';
+        bubble.style.bottom = '-60px';
+        bubble.style.opacity = Math.random()*0.5+0.3;
+        const drift = Math.random()*120-60;
+        bubble.style.setProperty('--drift', drift+'px');
+        const dur = (Math.random()*6+4).toFixed(2);
+        bubble.style.animationDuration = dur+'s';
+        document.body.appendChild(bubble);
+        setTimeout(()=>bubble.remove(), (dur*1000)+500);
+    }, 200);
 }
-
-setInterval(createBubble, 200);
 </script>
 </body>
 </html>
