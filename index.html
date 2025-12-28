@@ -4,7 +4,105 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Error's Cozy Website</title>
-<link rel="stylesheet" href="style.css">
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#070708;
+    color:#eee;
+    overflow:hidden;
+}
+
+/* Navbar */
+.navbar{
+    position:fixed; top:12px; left:50%; transform:translateX(-50%);
+    display:flex; gap:14px; z-index:200;
+    padding:6px 10px;
+    background:rgba(12,12,12,0.35);
+    border-radius:12px;
+    backdrop-filter: blur(6px);
+}
+.nav-btn{
+    padding:8px 14px; border-radius:10px; cursor:pointer;
+    color:#cfcfcf; font-weight:600; transition: transform .18s, box-shadow .18s, color .2s;
+}
+.nav-btn:hover{
+    transform:translateY(-6px) scale(1.05);
+    box-shadow:0 18px 40px rgba(0,0,0,0.6),0 6px 18px rgba(255,255,255,0.03);
+    color:#fff;
+}
+
+/* Start screen */
+#startScreen{
+    position:fixed; inset:0; z-index:300;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    background:linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0.95));
+}
+#startScreen h1{margin-bottom:20px; font-size:3em; text-shadow:0 0 20px #0ff;}
+#startBtn{
+    padding:14px 28px;
+    font-size:20px;
+    cursor:pointer;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(180deg,#00e0ff,#00a7d6);
+    color:#041018;
+    box-shadow:0 6px 20px rgba(0,255,255,0.3);
+    transition: transform .2s, box-shadow .2s;
+}
+#startBtn:hover{
+    transform:translateY(-4px) scale(1.05);
+    box-shadow:0 10px 30px rgba(0,255,255,0.5);
+}
+
+/* Sections */
+.section{display:none; padding-top:100px; text-align:center}
+.section.active{display:block}
+.section h1{font-size:34px; margin:6px 0; text-shadow:0 0 12px #0ff;}
+
+/* About card */
+.about-card{
+    max-width:720px; margin:20px auto; background:rgba(20,20,20,0.6);
+    padding:18px; border-radius:12px; display:flex; gap:18px; align-items:center;
+    border:1px solid rgba(255,255,255,0.03);
+}
+.about-avatar{width:120px;height:120px;border-radius:10px;object-fit:cover; box-shadow:0 4px 12px rgba(0,255,255,0.3);}
+.about-info h2{margin:0; text-shadow:0 0 10px #0ff;}
+.role{color:#6fe; text-shadow:0 0 6px #0ff;}
+.profile-btn{
+    margin-top:8px; padding:8px 14px; cursor:pointer;
+    border:none; border-radius:10px; background:#00a7d6;
+    color:#fff; font-weight:600; transition: transform .2s, box-shadow .2s;
+    display:inline-flex; align-items:center; gap:6px;
+    width:100%;
+    justify-content:center;
+}
+.profile-btn:hover{
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:0 6px 18px rgba(0,255,255,0.4);
+}
+.profile-links{
+    display:flex; flex-direction:column; gap:10px; margin-top:12px;
+}
+
+/* Bubbles */
+.bubble{
+    position:absolute;
+    bottom:-60px;
+    border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0.15));
+    box-shadow:0 6px 16px rgba(0,0,0,0.5),0 0 8px rgba(0,200,255,0.05);
+    pointer-events:none;
+    transform-origin:center;
+    will-change:transform, opacity;
+}
+@keyframes riseUp{
+    0%{transform:translateY(0) translateX(0) scale(1); opacity:0.25}
+    20%{opacity:0.45}
+    100%{transform:translateY(-120vh) translateX(var(--drift,0px)) scale(1.18); opacity:0}
+}
+.bubble{animation-name:riseUp; animation-timing-function:linear;}
+</style>
 </head>
 <body>
 
@@ -19,7 +117,6 @@
 <nav class="navbar">
     <div class="nav-btn" onclick="showSection('home')">Home</div>
     <div class="nav-btn" onclick="showSection('credits')">Credits</div>
-    <div class="nav-btn" onclick="showSection('projects')">Projects</div>
 </nav>
 
 <!-- Sections -->
@@ -31,18 +128,20 @@
 <section id="credits" class="section">
     <h1>Credits</h1>
     <div class="about-card">
-        <img src="avatar.png" class="about-avatar" alt="avatar">
+        <img src="avatar.jpg" class="about-avatar" alt="avatar">
         <div class="about-info">
             <h2>Error</h2>
             <p class="role">Owner</p>
-            <button class="github-btn" onclick="window.open('https://github.com/marcus640','_blank')">Visit my GitHub →</button>
+            <div class="profile-links">
+                <button class="profile-btn" onclick="window.open('https://github.com/marcus640','_blank')">
+                    Visit my GitHub →
+                </button>
+                <button class="profile-btn" onclick="window.open('https://tryhackme.com/p/zmarcus395','_blank')">
+                    Visit my TryHackMe →
+                </button>
+            </div>
         </div>
     </div>
-</section>
-
-<section id="projects" class="section">
-    <h1>Projects</h1>
-    <p>Coming soon…</p>
 </section>
 
 <!-- Video as music -->
@@ -96,3 +195,4 @@ function startBubbles(){
 </script>
 </body>
 </html>
+
